@@ -1,4 +1,5 @@
-from flask import Flask
+from flask import Flask, request
+from flask_restful import Api,Resource
 from dotenv import load_dotenv
 import os
 from supabase import create_client, Client
@@ -11,7 +12,8 @@ key: str = os.getenv("SUPABASE_KEY")
 supabase: Client = create_client(url, key)
 
 app = Flask(__name__)
-
+app.debug = True
+api = Api(app)
 
 @app.route('/')
 def helloWorld() -> str:
@@ -23,6 +25,21 @@ def addFoodBankOrganization():
     response = supabase.table("FoodCharityOrganizations").select('*').execute()
     print(response)
 
+class UpdateFoodBinDetails(Resource):
+    def post(self):
+
+        data = request.json
+
+        if 'temperature' not in data:
+            return {"Bad Request":"Temperature Field Missing In Request Body"},400
+        if 'humidity' not in data:
+            return {"Bad Request":"Humidity Field Missing in Request Body"},400
+
+        supabase.table("FoodBins").update({'Temperature':data["temperature"], 'Humidity':data["humidity"]}).eq("FoodBinID",1).execute()
+        
+        return {"Success":"Food Bin Details Updated"},200
+
+api.add_resource(UpdateFoodBinDetails, '/update_food_bin_details')
 
 if __name__ == "__main__":
     app.run()
