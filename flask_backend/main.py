@@ -41,5 +41,5 @@ class UpdateFoodBinDetails(Resource):
 
 api.add_resource(UpdateFoodBinDetails, '/update_food_bin_details')
 
-if __name__ == "__main__":
-    app.run()
+# if __name__ == "__main__":
+#     app.run()
