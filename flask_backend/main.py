@@ -19,6 +19,9 @@ api = Api(app)
 def helloWorld() -> str:
     return "hello world"
 
+@app.route('/favicon.ico')
+def favicon():
+    return '', 204
 
 @app.route('/add_food_bank_organization')
 def addFoodBankOrganization():
@@ -41,5 +44,5 @@ class UpdateFoodBinDetails(Resource):
 
 api.add_resource(UpdateFoodBinDetails, '/update_food_bin_details')
 
-# if __name__ == "__main__":
-#     app.run()
+if __name__ == "__main__":
+    app.run(debug=True)
