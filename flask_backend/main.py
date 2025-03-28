@@ -12,7 +12,6 @@ key: str = os.getenv("SUPABASE_KEY")
 supabase: Client = create_client(url, key)
 
 app = Flask(__name__)
-app.debug = True
 api = Api(app)
 
 @app.route('/')
