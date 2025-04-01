@@ -1,37 +1,13 @@
-import { useEffect, useState } from 'react';
-import { supabase } from './supabaseClient';
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import Messages from './pages/Messages';
 
-const Messages = () => {
-  const [messages, setMessages] = useState([]);
+function App() {
+  return <BrowserRouter>
+    <Routes>
+      <Route path="/dashboard" element={<h1>Dashboard</h1>}></Route>
+      <Route path="/sensor_output" element={<Messages/>}></Route>
+    </Routes>
+  </BrowserRouter>
+}
 
-  useEffect(() => {
-    const channel = supabase
-      .channel('food-bin-watch')
-      .on(
-        'postgres_changes',
-        { event: '*', schema: 'public', table: 'FoodBins' },
-        (payload) => {
-          console.log(payload),
-            setMessages((prev) => { return payload['new'] });
-        }
-      )
-      .subscribe();
-
-    return () => {
-      supabase.removeChannel(channel);
-    };
-  }, []);
-
-  return (
-    <ul>
-      {Object.entries(messages).map(([key, value]) => (
-        <li key={key}>
-          <strong>{key}:</strong> {String(value)}
-        </li>
-      ))}
-    </ul>
-  );
-};
-
-export default Messages;
-
+export default App;
