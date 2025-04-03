@@ -1,0 +1,99 @@
+/* Global Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+  }
+  
+  body {
+    background-color: #f8f9fa;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    padding: 20px;
+  }
+  
+  /* Form Container */
+  .donation-form-container {
+    background: white;
+    padding: 3rem;
+    border-radius: 12px;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 650px;
+    text-align: center;
+  }
+  
+  h2 {
+    color: #007bff;
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  /* Form Styling */
+  .donation-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+  }
+  
+  label {
+    font-weight: bold;
+    text-align: left;
+    display: block;
+    font-size: 1.1rem;
+  }
+  
+  /* Larger Input Fields */
+  input,
+  select,
+  textarea {
+    width: 100%;
+    padding: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1.1rem;
+  }
+  
+  textarea {
+    resize: none;
+  }
+  
+  /* Submit Button */
+  button {
+    background: #007bff;
+    color: white;
+    padding: 1rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  
+  button:hover {
+    background: #0056b3;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .donation-form-container {
+      width: 95%;
+      padding: 2rem;
+    }
+  
+    input,
+    select,
+    textarea {
+      font-size: 1rem;
+      padding: 0.8rem;
+    }
+  
+    button {
+      font-size: 1.1rem;
+      padding: 0.9rem;
+    }
+  }
+  
