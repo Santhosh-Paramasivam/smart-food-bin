@@ -1,26 +1,36 @@
 import React, { useEffect, useState } from "react";
 import "../styles/Dash.css";
-import { supabase } from '../supabaseClient';
+import { supabase } from "../supabaseClient";
 
 const Dashboard = () => {
-
   const [messages, setMessages] = useState([]);
   const [temperature, setTemperature] = useState(32);
   const [humidity, setHumidity] = useState(42);
-  const [lastUpdateTime, setLastUpdateTime] = useState('1/4/2025, 08:21:58 PM');
+  const [lastUpdateTime, setLastUpdateTime] = useState("1/4/2025, 08:21:58 PM");
 
   useEffect(() => {
     const channel = supabase
-      .channel('food-bin-watch')
+      .channel("food-bin-watch")
       .on(
-        'postgres_changes',
-        { event: '*', schema: 'public', table: 'FoodBinReadings' },
+        "postgres_changes",
+        { event: "*", schema: "public", table: "FoodBinReadings" },
         (payload) => {
           console.log(payload);
-          setLastUpdateTime((prev) => { return new Date(payload['commit_timestamp']).toLocaleString("en-IN", { timeZone: "Asia/Kolkata" }) })
-          setHumidity((prev) => { return payload['new']['Humidity'] })
-          setTemperature((prev) => { return payload['new']['Temperature'] })
-          setMessages((prev) => { return payload['new'] });
+          setLastUpdateTime((prev) => {
+            return new Date(payload["commit_timestamp"]).toLocaleString(
+              "en-IN",
+              { timeZone: "Asia/Kolkata" }
+            );
+          });
+          setHumidity((prev) => {
+            return payload["new"]["Humidity"];
+          });
+          setTemperature((prev) => {
+            return payload["new"]["Temperature"];
+          });
+          setMessages((prev) => {
+            return payload["new"];
+          });
         }
       )
       .subscribe();
@@ -29,7 +39,6 @@ const Dashboard = () => {
       supabase.removeChannel(channel);
     };
   }, []);
-
 
   const bins = [
     {

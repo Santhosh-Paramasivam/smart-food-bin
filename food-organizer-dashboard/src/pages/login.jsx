@@ -1,18 +1,13 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Mail, Lock, User, Phone } from "lucide-react";
-import { Link, useNavigate } from "react-router-dom";
+import { Mail, Lock, Phone } from "lucide-react";
 import "../styles/signUp.css";
 
-export default function SignUp() {
+export default function Login() {
   const [formData, setFormData] = useState({
-    name: "",
-    phone: "",
-    email: "",
+    phoneOrEmail: "",
     password: "",
   });
-
-  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -20,8 +15,7 @@ export default function SignUp() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("User Data:", formData);
-    navigate("/login");
+    console.log("Login Data:", formData);
   };
 
   return (
@@ -32,39 +26,18 @@ export default function SignUp() {
         transition={{ duration: 0.6 }}
       >
         <div className="signup-card enlarged-form-container">
-          <h2 className="signup-title">Sign Up</h2>
+          <h2 className="signup-title">Login</h2>
           <div className="signup-content">
             <form onSubmit={handleSubmit} className="signup-form enlarged-form">
               <div className="input-group">
-                <User className="input-icon" />
-                <input
-                  type="text"
-                  name="name"
-                  placeholder="Full Name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-              <div className="input-group">
                 <Phone className="input-icon" />
                 <input
-                  type="tel"
-                  name="phone"
-                  placeholder="Phone Number"
-                  value={formData.phone}
+                  type="text"
+                  name="phoneOrEmail"
+                  placeholder="Phone Number or Email"
+                  value={formData.phoneOrEmail}
                   onChange={handleChange}
                   required
-                />
-              </div>
-              <div className="input-group">
-                <Mail className="input-icon" />
-                <input
-                  type="email"
-                  name="email"
-                  placeholder="Email (Optional)"
-                  value={formData.email}
-                  onChange={handleChange}
                 />
               </div>
               <div className="input-group">
@@ -79,12 +52,9 @@ export default function SignUp() {
                 />
               </div>
               <button type="submit" className="signup-button">
-                Sign Up
+                Login
               </button>
             </form>
-            <p className="signup-footer">
-              Already have an account? <Link to="/login">Login</Link>
-            </p>
           </div>
         </div>
       </motion.div>
