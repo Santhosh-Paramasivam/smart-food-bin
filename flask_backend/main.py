@@ -3,13 +3,13 @@ from flask_restful import Api,Resource
 from dotenv import load_dotenv
 import os
 from supabase import create_client, Client
-import time
 import datetime
 
 load_dotenv()
 
 url: str = os.getenv("SUPABASE_URL")
 key: str = os.getenv("SUPABASE_KEY")
+API_KEY : str = os.getenv("API_KEY")
 
 supabase: Client = create_client(url, key)
 
@@ -24,13 +24,13 @@ def helloWorld() -> str:
 def favicon():
     return '', 204
 
-@app.route('/add_food_bank_organization')
-def addFoodBankOrganization():
-    response = supabase.table("FoodCharityOrganizations").select('*').execute()
-    print(response)
-
 class UpdateFoodBinDetails(Resource):
     def post(self):
+        
+        apiKey = request.headers.get("API-KEY")
+
+        if not apiKey or apiKey != API_KEY:
+            return {"Unauthorized":"Non-existent or invalid API key"},401
 
         data = request.json
 
@@ -53,10 +53,15 @@ class UpdateFoodBinDetails(Resource):
 class GetFoodBinReadings(Resource):
     def get(self):
         
+        apiKey = request.headers.get("API-KEY")
+
+        if not apiKey or apiKey != API_KEY:
+            return {"Unauthorized":"Non-existent or invalid API key"},401
+
         foodBinID =  request.args.get('foodbin-id')
 
         if not foodBinID:
-            return {"Bad Request":"foodbin-id not present in request parameter"}
+            return {"Bad Request":"foodbin-id not present in request parameter"},400
 
         response = (
                 supabase.table("FoodBinReadings")
@@ -67,7 +72,7 @@ class GetFoodBinReadings(Resource):
                 .execute()
         )
 
-        return response.data[0],200
+        return response.data,200
 
 
 api.add_resource(UpdateFoodBinDetails, '/update_food_bin_details')
