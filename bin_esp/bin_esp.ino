@@ -25,6 +25,9 @@ void loop() {
   delay(5000);
   Serial.println(WIFI_SSID);
   displayTemperatureAndHumidity();
+  
+  String macAddress = WiFi.macAddress();
+  Serial.println(macAddress);
 
   updateUserLocation();
   Serial.println("I'm awake, but I'm going into deep sleep mode for 10 seconds");
