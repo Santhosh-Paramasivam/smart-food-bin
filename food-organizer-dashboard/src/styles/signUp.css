@@ -1,0 +1,86 @@
+/* SignUp.css */
+.signup-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(to right, #6366f1, #9333ea);
+    padding: 20px;
+}
+
+.signup-card {
+    width: 100%;
+    max-width: 500px; /* Increased width */
+    padding: 32px; /* Increased padding */
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+.signup-title {
+    text-align: center;
+    font-size: 28px; /* Increased font size */
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.signup-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* Increased gap between fields */
+}
+
+.input-group {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-icon {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #666;
+    font-size: 20px;
+}
+
+input {
+    width: 100%;
+    padding: 14px 14px 14px 40px; /* Increased padding */
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    outline: none;
+    transition: border 0.3s;
+}
+
+input:focus {
+    border-color: #6366f1;
+}
+
+.signup-button {
+    width: 100%;
+    background: #6366f1;
+    color: white;
+    font-weight: bold;
+    padding: 14px; /* Increased padding */
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 18px;
+    transition: background 0.3s;
+}
+
+.signup-button:hover {
+    background: #4f46e5;
+}
+
+/* Enlarged Form Styling */
+.enlarged-form-container {
+    max-width: 600px; /* Increased the max width */
+}
+
+.enlarged-form {
+    padding: 24px; /* Increased padding inside the form */
+}
