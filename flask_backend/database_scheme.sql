@@ -43,5 +43,6 @@ CREATE TABLE "Donor"(
     "DonorID" BIGSERIAL PRIMARY KEY,
     "Name" VARCHAR(50) NOT NULL,
     "EmailID" VARCHAR(50) NULL,
+    -- update phone number to mandatory
     "PhoneNumber" VARCHAR(10) NULL
 );

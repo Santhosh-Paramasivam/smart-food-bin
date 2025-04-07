@@ -3,6 +3,9 @@ import "../styles/DonationForm.css";
 
 const DonationForm = () => {
   const [formData, setFormData] = useState({
+    donorName: "",
+    emailId: "",
+    phoneNumber: "",
     foodType: "",
     donationType: "",
     donatedItemName: "",
@@ -11,8 +14,8 @@ const DonationForm = () => {
     timeOfExpiry: "",
   });
 
-  const foodTypes = ["Vegetarian", "Non-Vegetarian", "Vegan", "Others"];
-  const donationTypes = ["Perishable", "Non-Perishable", "Cooked", "Raw"];
+  const foodTypes = ["solid","liquid"];
+  const donationTypes = ["Perishable", "Non-Perishable", "Cooked Meals", "Canned Goods"];
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -29,6 +32,40 @@ const DonationForm = () => {
     <div className="donation-form-container">
       <h2>Donate Food</h2>
       <form onSubmit={handleSubmit} className="donation-form">
+        
+        {/* Donor Name */}
+        <label>Donor Name</label>
+        <input
+          type="text"
+          name="donorName"
+          value={formData.donorName}
+          onChange={handleChange}
+          placeholder="Enter your name"
+          required
+        />
+
+        {/* Donor Phone Number */}
+        <label>Donor Phone Number</label>
+        <input
+          type="text"
+          name="phoneNumber"
+          value={formData.phoneNumber}
+          onChange={handleChange}
+          placeholder="Enter your phone number"
+          required
+        />
+        
+        {/* Donor Email ID*/}
+        <label>Donor Email ID (Optional)</label>
+        <input
+          type="text"
+          name="emailId"
+          value={formData.emailId}
+          onChange={handleChange}
+          placeholder="Enter your email ID"
+          required
+        />
+
         {/* Food Type */}
         <label>Food Type</label>
         <select
@@ -39,7 +76,7 @@ const DonationForm = () => {
         >
           <option value="">Select Food Type</option>
           {foodTypes.map((type, index) => (
-            <option key={index} value={type}>
+            <option key={type} value={type}>
               {type}
             </option>
           ))}
@@ -55,7 +92,7 @@ const DonationForm = () => {
         >
           <option value="">Select Donation Type</option>
           {donationTypes.map((type, index) => (
-            <option key={index} value={type}>
+            <option key={type} value={type}>
               {type}
             </option>
           ))}
