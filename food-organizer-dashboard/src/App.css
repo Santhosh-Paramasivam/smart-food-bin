@@ -7,14 +7,15 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  box-sizing: border-box;
 }
 
 /* Logo Styling */
 .logo {
   height: 6em;
   padding: 1.5em;
-  transition: filter 300ms ease-in-out;
   display: block;
+  transition: filter 300ms ease-in-out;
 }
 
 /* Logo Hover Effects */
@@ -26,7 +27,7 @@
   filter: drop-shadow(0 0 2em rgba(97, 218, 251, 0.67));
 }
 
-/* Logo Animation */
+/* Logo Spin Animation */
 @keyframes logo-spin {
   from {
     transform: rotate(0deg);
@@ -36,7 +37,7 @@
   }
 }
 
-/* Apply animation only when motion is preferred */
+/* Apply logo animation only when motion is allowed */
 @media (prefers-reduced-motion: no-preference) {
   a:nth-of-type(2) .logo {
     animation: logo-spin infinite 20s linear;
@@ -46,12 +47,13 @@
 /* Card Styling */
 .card {
   padding: 2rem;
-  background: white;
+  background-color: #ffffff;
   border-radius: 12px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   max-width: 600px;
   width: 100%;
   margin: 1rem 0;
+  box-sizing: border-box;
 }
 
 /* Documentation Text */

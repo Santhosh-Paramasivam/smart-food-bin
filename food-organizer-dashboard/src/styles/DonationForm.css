@@ -1,116 +1,109 @@
-/* General styles */
-body {
-    background-color: #f0f5ff;
-    font-family: 'Poppins', sans-serif;
+/* Full Page Setup */
+html, body {
     margin: 0;
     padding: 0;
+    height: 100%;
+    font-family: 'Poppins', sans-serif;
+    background: #eef3fa;
+    overflow-x: hidden;
+}
+
+/* Centering Wrapper */
+.form-wrapper {
     display: flex;
     justify-content: center;
-    align-items: center;
-    height: 100vh;
-   
+    align-items: flex-start;
+    padding: 40px 20px;
+    min-height: 100vh;
+    box-sizing: border-box;
+    overflow-y: auto;
 }
 
 /* Donation Form Container */
 .donation-form-container {
-    background: #ffffff;
-    padding: 30px;
-    border-radius: 12px;
-    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.2);
-    width: 420px;
+    background-color: #fff;
+    padding: 35px;
+    border-radius: 18px;
+    box-shadow: 0 6px 30px rgba(0, 0, 0, 0.12);
+    max-width: 700px;
+    width: 700px;
+    animation: slideIn 0.6s ease-in-out;
+    overflow-y: auto;
+    max-height: 85vh; /* ✨ Makes the form scrollable if it exceeds */
+}
+
+/* Heading */
+.donation-form-container h2 {
     text-align: center;
-    animation: fadeIn 0.8s ease-in-out;
+    font-size: 28px;
+    color: #2f3542;
+    margin-bottom: 25px;
 }
 
-/* Title */
-h2 {
-    font-size: 26px;
-    font-weight: bold;
-    color: #3742fa;
-    margin-bottom: 20px;
-}
-
-/* Form Styling */
+/* Form Layout */
 .donation-form {
     display: flex;
     flex-direction: column;
-    gap: 15px;
-    width: 400px;
+    gap: 18px;
 }
 
-/* Label */
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
 label {
-    font-size: 16px;
     font-weight: 600;
-    text-align: left;
-    color: #1b1464;
+    margin-bottom: 8px;
+    color: #3742fa;
 }
 
-/* Input Group */
+/* Inputs */
 input,
 select,
 textarea {
-    width: 100%;
-    padding: 12px;
-    border: 2px solid #020203;
-    border-radius: 8px;
-    background: #e8efff;
+    padding: 14px;
+    border-radius: 10px;
+    border: 1.5px solid #dcdde1;
+    background: #f8faff;
     font-size: 16px;
     outline: none;
-    transition: border-color 0.3s ease-in-out;
+    transition: 0.3s ease-in-out;
 }
 
 input:focus,
 select:focus,
 textarea:focus {
     border-color: #3742fa;
+    background-color: #ffffff;
 }
 
 /* Textarea */
 textarea {
-    resize: none;
-    height: 100px;
+    resize: vertical;
+    min-height: 90px;
 }
 
-/* Button Styling */
+/* Submit Button */
 button {
     background: linear-gradient(135deg, #1e90ff, #3742fa);
-    color: white;
+    color: #fff;
     border: none;
-    padding: 12px;
-    font-size: 18px;
-    font-weight: bold;
-    border-radius: 8px;
+    padding: 14px;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 10px;
     cursor: pointer;
-    transition: background 0.3s ease-in-out;
+    transition: all 0.3s ease;
 }
 
 button:hover {
     background: linear-gradient(135deg, #3742fa, #1e90ff);
-}
-
-/* Responsive Design */
-@media (max-width: 480px) {
-    .donation-form-container {
-        width: 95%;
-        padding: 20px;
-    }
-
-    input,
-    select,
-    textarea {
-        font-size: 14px;
-        padding: 10px;
-    }
-
-    button {
-        font-size: 16px;
-        padding: 10px;
-    }
+    transform: scale(1.02);
 }
 
 /* Animation */
-@keyframes fadeIn {
+@keyframes slideIn {
     from {
         opacity: 0;
         transform: translateY(-20px);
@@ -118,5 +111,24 @@ button:hover {
     to {
         opacity: 1;
         transform: translateY(0);
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .donation-form-container {
+        padding: 25px;
+        max-width: 95%;
+        max-height: 90vh;
+    }
+
+    input,
+    select,
+    textarea {
+        font-size: 15px;
+    }
+
+    button {
+        font-size: 15px;
     }
 }
