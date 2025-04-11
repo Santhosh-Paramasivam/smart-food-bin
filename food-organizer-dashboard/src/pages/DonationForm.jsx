@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import "../styles/DonationForm.css";
+import axios from 'axios';
+import { useLocation } from 'react-router-dom';
+import { serverUrl } from "../serverCredential";
 
 const DonationForm = () => {
   const [formData, setFormData] = useState({
@@ -14,7 +17,14 @@ const DonationForm = () => {
     timeOfExpiry: "",
   });
 
-  const foodTypes = ["Solid", "Liquid"];
+  function useQuery() {
+    return new URLSearchParams(useLocation().search);
+  }
+
+  const query = useQuery();
+  const foodBinId = query.get('foodbin-id');
+
+  const foodTypes = ["solid", "liquid"];
   const donationTypes = [
     "Perishable",
     "Non-Perishable",
@@ -30,6 +40,15 @@ const DonationForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Form Data Submitted:", formData);
+
+    axios.post(serverUrl +`/place_donation`, {
+      formData
+    }, {
+      params: {
+        "foodbin-id": foodBinId
+      }
+    });
+
     alert("Thank you for your donation!");
   };
 

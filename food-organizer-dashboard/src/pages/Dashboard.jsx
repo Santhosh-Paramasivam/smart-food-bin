@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "../styles/Dash.css";
+import "../styles/dash.css";
 import { supabase } from "../supabaseClient";
 
 const Dashboard = () => {

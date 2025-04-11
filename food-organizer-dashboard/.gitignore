@@ -23,5 +23,8 @@ dist-ssr
 *.sln
 *.sw?
 
-# ANON CLIENT KEY
-src/supabaseClient.js
+# VERCEL
+.vercel
+
+# environment variables
+.env
