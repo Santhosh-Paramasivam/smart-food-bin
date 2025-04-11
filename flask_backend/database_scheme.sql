@@ -35,6 +35,7 @@ CREATE TABLE "Donations"(
     "EstimatedPreparationTimestamp" TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL,
     "EstimatedExpiryTimestamp" TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL,
     "FoodBinID" BIGINT NOT NULL,
+    "PickedUp" BOOLEAN NOT NULL,
     FOREIGN KEY ("FoodBinID") REFERENCES "FoodBins"("FoodBinID") ON DELETE CASCADE,
     FOREIGN KEY("DonorID") REFERENCES "Donor"("DonorID") ON DELETE CASCADE
 );
