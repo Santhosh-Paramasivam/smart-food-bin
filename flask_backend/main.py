@@ -10,7 +10,6 @@ load_dotenv()
 
 url: str = os.getenv("SUPABASE_URL")
 key: str = os.getenv("SUPABASE_KEY")
-API_KEY: str = os.getenv("API_KEY")
 
 supabase: Client = create_client(url, key)
 
@@ -40,11 +39,6 @@ def returnIfPresent(data: dict, key: str) -> str:
 class UpdateFoodBinDetails(Resource):
     def post(self):
 
-        apiKey = request.headers.get("API-KEY")
-
-        if not apiKey or apiKey != API_KEY:
-            return {"Unauthorized": "Non-existent or invalid API key"}, 401
-
         data = request.json
 
         if 'temperature' not in data:
@@ -66,11 +60,6 @@ class UpdateFoodBinDetails(Resource):
 
 class GetFoodBinReadings(Resource):
     def get(self):
-
-        apiKey = request.headers.get("API-KEY")
-
-        if not apiKey or apiKey != API_KEY:
-            return {"Unauthorized": "Non-existent or invalid API key"}, 401
 
         foodBinID = request.args.get('foodbin-id')
 
@@ -155,7 +144,14 @@ class PlaceDonation(Resource):
 
         return {"Success": "Donation Placed"}, 200
 
+class GetFoodBins(Resource):
+    def get(self):
 
+        response = supabase.table("FoodBins").select('*').execute()
+        return response.data,200
+
+
+api.add_resource(GetFoodBins,'/getfoodbins')
 api.add_resource(UpdateFoodBinDetails, '/update_food_bin_details')
 api.add_resource(GetFoodBinReadings, '/get_food_bin_details')
 api.add_resource(PlaceDonation, '/place_donation')
