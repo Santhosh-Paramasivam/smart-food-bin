@@ -3,6 +3,7 @@ import "../styles/dash.css";
 import { supabase } from "../supabaseClient";
 import axios from 'axios';
 import { serverUrl } from "../serverCredential";
+import DonationCard from "../components/DonationCard";
 
 const Dashboard = () => {
   const [messages, setMessages] = useState([]);
@@ -14,6 +15,32 @@ const Dashboard = () => {
 
   const [foodBins, setFoodBins] = useState([]);
   const [selectedBin, setSelectedBin] = useState({});
+
+  const pickUpDonation = (donationId) => {
+    console.log('clicked')
+    setDonations((donations) => {
+      return donations.filter((item) => { return item.donationId !== donationId });
+    })
+  }
+
+  const [donations, setDonations] = useState([{
+    donationId: "1",
+    name: "name1",
+    description: "description1",
+    foodType: "foodtype1",
+    donationType: "donationtype1",
+    timeOfPreparation: "timeofpreparation1",
+    timeOfExpiry: "timeofexpiry1"
+  }, {
+    donationId: "2",
+    name: "name2",
+    description: "description2",
+    foodType: "foodtype2",
+    donationType: "donationtype2",
+    timeOfPreparation: "timeofpreparation2",
+    timeOfExpiry: "timeofexpiry2"
+  }
+  ]);
 
   const handleBinClick = (bin) => {
     setSelectedBin(bin);
@@ -62,7 +89,7 @@ const Dashboard = () => {
       queryFoodBinDetails();
     }, 5000);
     return () => clearInterval(interval);
-  }, [selectedBin]); 
+  }, [selectedBin]);
 
   return (
     <>
@@ -117,7 +144,26 @@ const Dashboard = () => {
             </div>
           </div>
         </main>
-      </div>
+        <main className="dashboard-details">
+          <div className="dashboard-card">
+            {donations.map(
+              (donation) => {
+                return <DonationCard
+                  key={donation.donationId}
+                  name={donation.name}
+                  description={donation.description}
+                  foodType={donation.foodType}
+                  donationType={donation.donationType}
+                  timeOfPreparation={donation.timeOfPreparation}
+                  timeOfExpiry={donation.timeOfExpiry}
+                  pickUp={() => { pickUpDonation(donation.donationId) }}
+                />
+              }
+            )}
+            {/* <DonationCard name="Strawberry"></DonationCard> */}
+          </div>
+        </main>
+      </div >
     </>
   );
 };

@@ -194,3 +194,9 @@ body, html {
     padding: 20px;
   }
 }
+
+#pick-up {
+  background-color: black;
+  color: black;
+  width: 100px;
+}
