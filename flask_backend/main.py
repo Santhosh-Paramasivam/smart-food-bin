@@ -150,11 +150,36 @@ class GetFoodBins(Resource):
         response = supabase.table("FoodBins").select('*').execute()
         return response.data,200
 
+class GetDonations(Resource):
+    def get(self):
+
+        foodBinID = request.args.get('foodbin-id')
+
+        if not foodBinID:
+            return {"Bad Request": "foodbin-id not present in request parameter"}, 400
+
+        response = supabase.table("Donations").select('*').eq('FoodBinID',foodBinID).eq('PickedUp',False).execute()
+        return response.data,200
+    
+class PickUpDonation(Resource):
+    def put(self):
+
+        data = request.json
+
+        if 'DonationID' not in data:
+            return {"Bad Request":"'DonationID' Is A Mandatory Field"},400
+        
+        response = supabase.table("Donations").update({'PickedUp': True}).eq('DonationID', data['DonationID']).execute()
+
+        return {"Success":"Item successfully picked up"}, 200
+        
 
 api.add_resource(GetFoodBins,'/getfoodbins')
 api.add_resource(UpdateFoodBinDetails, '/update_food_bin_details')
 api.add_resource(GetFoodBinReadings, '/get_food_bin_details')
 api.add_resource(PlaceDonation, '/place_donation')
+api.add_resource(GetDonations, '/get_donations')
+api.add_resource(PickUpDonation, '/pick_up_donation')
 
 if __name__ == "__main__":
     app.run(debug=True)

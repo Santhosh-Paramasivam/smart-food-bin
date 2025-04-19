@@ -19,8 +19,26 @@ const Dashboard = () => {
   const pickUpDonation = (donationId) => {
     console.log('clicked')
     setDonations((donations) => {
-      return donations.filter((item) => { return item.donationId !== donationId });
+      return donations.filter((item) => { return item.DonationID !== donationId });
     })
+
+    axios
+    .put(`${serverUrl}/pick_up_donation`, {"DonationID":donationId})
+    .catch((error)=>console.log(error))
+    .then((response)=>console.log(response))
+  }
+
+  const queryDonations = () => {
+    if (!selectedBin || !selectedBin.FoodBinID) return;
+
+    axios
+      .get(`${serverUrl}/get_donations?foodbin-id=${selectedBin.FoodBinID}`)
+      .catch((error) => { console.log(error) })
+      .then((response) => {
+        console.log(response)
+        console.log(response.data)
+        setDonations(response.data);
+      })
   }
 
   const [donations, setDonations] = useState([{
@@ -82,11 +100,13 @@ const Dashboard = () => {
   useEffect(() => {
     if (!selectedBin || !selectedBin.FoodBinID) return;
     queryFoodBinDetails();
+    queryDonations();
   }, [selectedBin]);
 
   useEffect(() => {
     const interval = setInterval(() => {
       queryFoodBinDetails();
+      queryDonations();
     }, 5000);
     return () => clearInterval(interval);
   }, [selectedBin]);
@@ -146,17 +166,47 @@ const Dashboard = () => {
         </main>
         <main className="dashboard-details">
           <div className="dashboard-card">
+            {/*Description
+: 
+"asdas"
+DonatedItemName
+: 
+"Biscuits"
+DonationID
+: 
+1
+DonationType
+: 
+"Perishable"
+DonorID
+: 
+13
+EstimatedExpiryTimestamp
+: 
+"2025-01-01T01:00:00"
+EstimatedPreparationTimestamp
+: 
+"2025-01-01T01:00:00"
+FoodBinID
+: 
+1
+FoodType
+: 
+"solid"
+PickedUp
+: 
+false */}
             {donations.map(
               (donation) => {
                 return <DonationCard
-                  key={donation.donationId}
-                  name={donation.name}
-                  description={donation.description}
-                  foodType={donation.foodType}
-                  donationType={donation.donationType}
-                  timeOfPreparation={donation.timeOfPreparation}
-                  timeOfExpiry={donation.timeOfExpiry}
-                  pickUp={() => { pickUpDonation(donation.donationId) }}
+                  key={donation.DonationID}
+                  name={donation.DonatedItemName}
+                  description={donation.Description}
+                  foodType={donation.FoodType}
+                  donationType={donation.DonationType}
+                  timeOfPreparation={donation.EstimatedPreparationTimestamp}
+                  timeOfExpiry={donation.EstimatedExpiryTimestamp}
+                  pickUp={() => { pickUpDonation(donation.DonationID) }}
                 />
               }
             )}
