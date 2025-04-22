@@ -4,6 +4,7 @@ import { supabase } from "../supabaseClient";
 import axios from 'axios';
 import { serverUrl } from "../serverCredential";
 import DonationCard from "../components/DonationCard";
+import { QrCode } from "lucide-react";
 
 const Dashboard = () => {
   const [messages, setMessages] = useState([]);
@@ -23,9 +24,9 @@ const Dashboard = () => {
     })
 
     axios
-    .put(`${serverUrl}/pick_up_donation`, {"DonationID":donationId})
-    .catch((error)=>console.log(error))
-    .then((response)=>console.log(response))
+      .put(`${serverUrl}/pick_up_donation`, { "DonationID": donationId })
+      .catch((error) => console.log(error))
+      .then((response) => console.log(response))
   }
 
   const queryDonations = () => {
@@ -41,24 +42,7 @@ const Dashboard = () => {
       })
   }
 
-  const [donations, setDonations] = useState([{
-    donationId: "1",
-    name: "name1",
-    description: "description1",
-    foodType: "foodtype1",
-    donationType: "donationtype1",
-    timeOfPreparation: "timeofpreparation1",
-    timeOfExpiry: "timeofexpiry1"
-  }, {
-    donationId: "2",
-    name: "name2",
-    description: "description2",
-    foodType: "foodtype2",
-    donationType: "donationtype2",
-    timeOfPreparation: "timeofpreparation2",
-    timeOfExpiry: "timeofexpiry2"
-  }
-  ]);
+  const [donations, setDonations] = useState([]);
 
   const handleBinClick = (bin) => {
     setSelectedBin(bin);
@@ -74,7 +58,12 @@ const Dashboard = () => {
         setTemperature(data.Temperature);
         setHumidity(data.Humidity);
         setLastUpdateTime(data.TimeOfMeasurement);
-        setFoodWeight(data.FoodWeight);
+        if (data.FoodWeight < 50) {
+          setFoodWeight("Empty");
+        }
+        else {
+          setFoodWeight(data.FoodWeight.toFixed(2).toString() + " g");
+        }
         setFoodSpoiled(data.FoodSpoiled);
       })
       .catch((err) => {
@@ -145,8 +134,8 @@ const Dashboard = () => {
               </div>
               <div className="info-section">
                 <div className="info-box">
-                  <h3>Food Weight</h3>
-                  <p>{foodWeight === "loading" ? foodWeight : foodWeight + " kg"}</p>
+                  <h3>Food Quantity</h3>
+                  <p>{foodWeight}</p>
                 </div>
               </div>
               <div className="info-section">
@@ -164,38 +153,9 @@ const Dashboard = () => {
             </div>
           </div>
         </main>
+        <QrCode></QrCode>
         <main className="dashboard-details">
           <div className="dashboard-card">
-            {/*Description
-: 
-"asdas"
-DonatedItemName
-: 
-"Biscuits"
-DonationID
-: 
-1
-DonationType
-: 
-"Perishable"
-DonorID
-: 
-13
-EstimatedExpiryTimestamp
-: 
-"2025-01-01T01:00:00"
-EstimatedPreparationTimestamp
-: 
-"2025-01-01T01:00:00"
-FoodBinID
-: 
-1
-FoodType
-: 
-"solid"
-PickedUp
-: 
-false */}
             {donations.map(
               (donation) => {
                 return <DonationCard
@@ -210,7 +170,6 @@ false */}
                 />
               }
             )}
-            {/* <DonationCard name="Strawberry"></DonationCard> */}
           </div>
         </main>
       </div >

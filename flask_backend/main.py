@@ -45,11 +45,15 @@ class UpdateFoodBinDetails(Resource):
             return {"Bad Request": "Temperature Field Missing In Request Body"}, 400
         if 'humidity' not in data:
             return {"Bad Request": "Humidity Field Missing In Request Body"}, 400
+        if 'weight' not in data:
+            return {"Bad Request": "Weight Field Missing In Request Body"}, 400
+        if 'foodbin-id' not in data:
+            return {"Bad Request": "FoodBinID Field Missing In Request Body"}, 400
 
         supabase.table("FoodBinReadings").insert({
             'TimeOfMeasurement': datetime.datetime.now().isoformat(),
-            'FoodBinID': 1,
-            'FoodWeight': 100,
+            'FoodBinID': data["foodbin-id"],
+            'FoodWeight': data["weight"],
             'Temperature': data["temperature"],
             'Humidity': data["humidity"],
             "FoodSpoiled": True
