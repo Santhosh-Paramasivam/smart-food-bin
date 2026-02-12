@@ -16,8 +16,8 @@ supabase: Client = create_client(url, key)
 app = Flask(__name__)
 api = Api(app)
 
-cors = CORS(app)
-
+# cors = CORS(app)
+cors = CORS(app, resources={r"/*": {"origins": "*"}})
 
 @app.route('/')
 def helloWorld() -> str:
@@ -47,12 +47,12 @@ class UpdateFoodBinDetails(Resource):
             return {"Bad Request": "Humidity Field Missing In Request Body"}, 400
         if 'weight' not in data:
             return {"Bad Request": "Weight Field Missing In Request Body"}, 400
-        if 'foodbin-id' not in data:
+        if 'foodbinid' not in data:
             return {"Bad Request": "FoodBinID Field Missing In Request Body"}, 400
 
         supabase.table("FoodBinReadings").insert({
             'TimeOfMeasurement': datetime.datetime.now().isoformat(),
-            'FoodBinID': data["foodbin-id"],
+            'FoodBinID': data["foodbinid"],
             'FoodWeight': data["weight"],
             'Temperature': data["temperature"],
             'Humidity': data["humidity"],
