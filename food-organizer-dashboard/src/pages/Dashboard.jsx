@@ -54,6 +54,8 @@ const Dashboard = () => {
     axios
       .get(`${serverUrl}/get_food_bin_details?foodbin-id=${selectedBin.FoodBinID}`)
       .then((response) => {
+        console.log('food bin details')
+        console.log(response)
         const data = response.data[0];
         setTemperature(data.Temperature);
         setHumidity(data.Humidity);
@@ -96,7 +98,7 @@ const Dashboard = () => {
     const interval = setInterval(() => {
       queryFoodBinDetails();
       queryDonations();
-    }, 5000);
+    }, 1000);
     return () => clearInterval(interval);
   }, [selectedBin]);
 
@@ -127,10 +129,10 @@ const Dashboard = () => {
             <h3>{"Last Update : " + lastUpdateTime}</h3>
             <div className="grid">
               <div className="info-section">
-                <div className="info-box">
+                {/* <div className="info-box">
                   <h3>Food Spoiled</h3>
                   <p>{foodSpoiled === "loading" ? foodSpoiled : foodSpoiled.toString()}</p>
-                </div>
+                </div> */}
               </div>
               <div className="info-section">
                 <div className="info-box">
@@ -153,9 +155,9 @@ const Dashboard = () => {
             </div>
           </div>
         </main>
-        <QrCode></QrCode>
         <main className="dashboard-details">
           <div className="dashboard-card">
+            <h2>Donation List</h2>
             {donations.map(
               (donation) => {
                 return <DonationCard
