@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from "react";
 import "../styles/dash.css";
-import { supabase } from "../supabaseClient";
 import axios from 'axios';
 import { serverUrl } from "../serverCredential";
 import DonationCard from "../components/DonationCard";
-import { QrCode } from "lucide-react";
 
 const Dashboard = () => {
   const [messages, setMessages] = useState([]);
