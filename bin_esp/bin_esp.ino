@@ -19,24 +19,6 @@ void setup() {
 
   scale.begin(LOADCELL_DOUT_PIN, LOADCELL_SCK_PIN);
   
-  uint32_t hasTaredFlag = 0;
-
-  // Read the hasTared flag from RTC memory
-  if (!ESP.rtcUserMemoryRead(0, &hasTaredFlag, sizeof(hasTaredFlag))) {
-    Serial.println("Failed to read RTC memory");
-  }
-
-  if (hasTaredFlag != 1) {
-    scale.set_scale();    
-    Serial.println("Tare... remove any weights from the scale.");
-    delay(4000);
-    scale.tare(); // Perform taring only if not done before
-    hasTaredFlag = 1;
-    if (!ESP.rtcUserMemoryWrite(0, &hasTaredFlag, sizeof(hasTaredFlag))) {
-      Serial.println("Failed to write to RTC memory");
-    }
-  }
-
   WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
   while (WiFi.status() != WL_CONNECTED) {
     delay(1000);
@@ -55,7 +37,7 @@ void loop() {
 
   sendBinStatus();
   Serial.println("I'm awake, but I'm going into deep sleep mode for 10 seconds");
-  ESP.deepSleep(10e6);   
+  ESP.deepSleep(2e6);   
 }
 
 void sendBinStatus()
@@ -133,7 +115,7 @@ double getWeight() {
     Serial.print("scale reading : ");
     Serial.println(scaleReading);
     
-    double weight = (scaleReading * -1) / 100.5751;
+    double weight = ((scaleReading + 154160.1) * -1) / 100.5751;
 
     return weight;
 }
