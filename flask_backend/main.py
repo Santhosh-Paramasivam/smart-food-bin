@@ -61,9 +61,10 @@ class UpdateFoodBinDetails(Resource):
             "FoodSpoiled": True
             }).execute()
 
-        print(timeit.repeat(update_database, number=100, repeat=20))
+        timeTaken = timeit.repeat(update_database, number=25)
+        print(timeTaken)
 
-        return {"Success": "Food Bin Details Updated"}, 200
+        return {"Success": "Food Bin Details Updated", "TimeTaken": timeTaken}, 200
 
 
 class GetFoodBinReadings(Resource):
