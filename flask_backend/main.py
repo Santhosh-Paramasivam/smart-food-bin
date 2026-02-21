@@ -61,8 +61,7 @@ class UpdateFoodBinDetails(Resource):
             "FoodSpoiled": True
             }).execute()
 
-        timeTaken = timeit.repeat(update_database, number=25)
-        print(timeTaken)
+        timeTaken = timeit.timeit(update_database, number=25)
 
         return {"Success": "Food Bin Details Updated", "TimeTaken": timeTaken}, 200
 
