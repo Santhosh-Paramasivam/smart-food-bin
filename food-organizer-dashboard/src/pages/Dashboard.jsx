@@ -96,7 +96,7 @@ const Dashboard = () => {
     const interval = setInterval(() => {
       queryFoodBinDetails();
       queryDonations();
-    }, 1000);
+    }, 30000);
     return () => clearInterval(interval);
   }, [selectedBin]);
 
