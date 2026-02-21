@@ -110,6 +110,7 @@ body, html {
   flex: 1;
   padding: 40px;
   overflow-y: auto;
+  height: 600px;
 }
 
 .dashboard-card {

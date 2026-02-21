@@ -102,13 +102,8 @@ const Dashboard = () => {
 
   return (
     <>
-      <nav className="navbar">
-        <h1>Food Bank Dashboard</h1>
-        <ul>
-          <li><a href="#">Home</a></li>
-          <li><a href="#">Reports</a></li>
-          <li><a href="#">Settings</a></li>
-        </ul>
+      <nav className="navbar" style={{ height: 70, paddingBottom: 0, paddingTop: 0 }}>
+        <h2>Food Bank Dashboard</h2>
       </nav>
       <div className="dashboard-container">
         <aside className="sidebar">
