@@ -5,6 +5,7 @@ import os
 from supabase import create_client, Client
 import datetime
 from flask_cors import CORS
+import timeit
 
 load_dotenv()
 
@@ -38,7 +39,7 @@ def returnIfPresent(data: dict, key: str) -> str:
 
 class UpdateFoodBinDetails(Resource):
     def post(self):
-
+        print("received : "+ str(request.json))
         data = request.json
 
         if 'temperature' not in data:
@@ -50,14 +51,17 @@ class UpdateFoodBinDetails(Resource):
         if 'foodbinid' not in data:
             return {"Bad Request": "FoodBinID Field Missing In Request Body"}, 400
 
-        supabase.table("FoodBinReadings").insert({
+        def update_database():
+            supabase.table("FoodBinReadings").insert({
             'TimeOfMeasurement': datetime.datetime.now().isoformat(),
             'FoodBinID': data["foodbinid"],
             'FoodWeight': data["weight"],
             'Temperature': data["temperature"],
             'Humidity': data["humidity"],
             "FoodSpoiled": True
-        }).execute()
+            }).execute()
+
+        print(timeit.repeat(update_database, number=100, repeat=20))
 
         return {"Success": "Food Bin Details Updated"}, 200
 
