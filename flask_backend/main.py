@@ -51,8 +51,8 @@ class UpdateFoodBinDetails(Resource):
         if 'foodbinid' not in data:
             return {"Bad Request": "FoodBinID Field Missing In Request Body"}, 400
 
-        def update_database():
-            supabase.table("FoodBinReadings").insert({
+        try:
+            response = supabase.table("FoodBinReadings").insert({
             'TimeOfMeasurement': datetime.datetime.now().isoformat(),
             'FoodBinID': data["foodbinid"],
             'FoodWeight': data["weight"],
@@ -60,10 +60,10 @@ class UpdateFoodBinDetails(Resource):
             'Humidity': data["humidity"],
             "FoodSpoiled": True
             }).execute()
+        except Exception as e:
+            raise e
 
-        timeTaken = timeit.timeit(update_database, number=25)
-
-        return {"Success": "Food Bin Details Updated", "TimeTaken": timeTaken}, 200
+        return {"Success": "Food Bin Details Updated", "Database response": response}, 200
 
 
 class GetFoodBinReadings(Resource):
