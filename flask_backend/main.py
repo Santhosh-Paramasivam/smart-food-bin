@@ -63,7 +63,7 @@ class UpdateFoodBinDetails(Resource):
         except Exception as e:
             raise e
 
-        return {"Success": "Food Bin Details Updated", "Database response": response}, 200
+        return {"Success": "Food Bin Details Updated", "Database response": response.model_dump_json()}, 200
 
 
 class GetFoodBinReadings(Resource):
