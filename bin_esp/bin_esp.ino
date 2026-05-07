@@ -36,20 +36,18 @@ void loop() {
   Serial.println(macAddress);
 
   sendBinStatus();
-  Serial.println("I'm awake, but I'm going into deep sleep mode for 10 seconds");
-  ESP.deepSleep(2e6);   
 }
 
 void sendBinStatus()
 {
   if (WiFi.status() == WL_CONNECTED) {
     Serial.println("Connected to WiFi");
-
+    delay(5000);
     WiFiClientSecure client;
     // Serial.println(WiFi.macAddress());
     client.setInsecure();
 
-    if (!client.connect(SERVER, 443)) {
+    if (!client.connect(SERVER, 80)) {
       Serial.println("Connection to server failed");
       delay(1000);
       return;
